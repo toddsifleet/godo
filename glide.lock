@@ -1,0 +1,43 @@
+hash: e23f5d3bf32973612e6e0ef867904346133abcec06e74448d4710cb7c518da21
+updated: 2018-01-04T22:45:16.477775-05:00
+imports:
+- name: github.com/gizak/termui
+  version: 72304ddb9b4e9838426a021aad64a5a860e98324
+- name: github.com/hpcloud/tail
+  version: 37f4271387456dd1bf82ab1ad9229f060cc45386
+  subpackages:
+  - ratelimiter
+  - util
+  - watch
+  - winfile
+- name: github.com/maruel/panicparse
+  version: c0182c169410cfa80c7e8f046dad208eaef91338
+  subpackages:
+  - stack
+- name: github.com/mattn/go-runewidth
+  version: 97311d9f7767e3d6f422ea06661bc2c7a19e8a5d
+- name: github.com/mitchellh/go-wordwrap
+  version: ad45545899c7b13c020ea92b2072220eefad42b8
+- name: github.com/nsf/termbox-go
+  version: aa4a75b1c20a2b03751b1a9f7e41d58bd6f71c43
+- name: github.com/pkg/term
+  version: b1f72af2d63057363398bec5873d16a98b453312
+- name: github.com/stretchr/testify
+  version: 87b1dfb5b2fa649f52695dd9eae19abe404a4308
+  subpackages:
+  - assert
+  - mock
+  - suit
+- name: gopkg.in/fsnotify.v1
+  version: 7be54206639f256967dd82fa767397ba5f8f48f5
+- name: gopkg.in/tomb.v1
+  version: c131134a1947e9afd9cecfe11f4c6dff0732ae58
+testImports:
+- name: github.com/davecgh/go-spew
+  version: ecdeabc65495df2dec95d7c4a4c3e021903035e5
+  subpackages:
+  - spew
+- name: github.com/pmezard/go-difflib
+  version: 792786c7400a136282c1664665ae0a8db921c6c2
+  subpackages:
+  - difflib

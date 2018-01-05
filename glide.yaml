@@ -1,0 +1,9 @@
+package: github.com/toddsifleet/godo
+import:
+  - package: github.com/gizak/termui
+  - package: github.com/hpcloud/tail
+  - package: github.com/stretchr/testify
+    subpackages:
+      - assert
+      - mock
+      - suit
