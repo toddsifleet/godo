@@ -67,7 +67,6 @@ func (s *index) GetDirectories(currentDirectory, search string) []models.Match {
 }
 
 func (s *index) GetCommands(currentDirectory, search string) []models.Match {
-	// TODO: Prefer matches from same directory
 	var matches models.MatchList
 	runes := splitAndRune(search)
 	for commandValue, commands := range s.commands {
