@@ -3,7 +3,6 @@ package index
 import (
 	"sort"
 	"strings"
-	"time"
 
 	"github.com/toddsifleet/godo/models"
 	"github.com/toddsifleet/godo/utils"
@@ -16,14 +15,14 @@ type Index interface {
 }
 
 type index struct {
-	commands    map[string][]*time.Time
-	directories map[string]map[string][]*time.Time
+	commands    map[string][]*models.Command
+	directories map[string][]*models.Command
 }
 
 func New() Index {
 	return &index{
-		commands:    map[string][]*time.Time{},
-		directories: map[string]map[string][]*time.Time{},
+		commands:    map[string][]*models.Command{},
+		directories: map[string][]*models.Command{},
 	}
 }
 
@@ -37,47 +36,30 @@ func splitAndRune(input string) [][]rune {
 	return result
 }
 
-func flattenTimes(input map[string][]*time.Time) []*time.Time {
-	var result []*time.Time
-
-	for _, times := range input {
-		result = append(result, times...)
-	}
-	return result
-}
-
 func (s *index) AddCommand(c *models.Command) {
 	if s.commands[c.Value] == nil {
-		s.commands[c.Value] = []*time.Time{&c.Time}
+		s.commands[c.Value] = []*models.Command{c}
 	} else {
-		s.commands[c.Value] = append(s.commands[c.Value], &c.Time)
+		s.commands[c.Value] = append(s.commands[c.Value], c)
 	}
 
 	if s.directories[c.RunDirectory] == nil {
-		s.directories[c.RunDirectory] = map[string][]*time.Time{
-			c.Value: []*time.Time{&c.Time},
-		}
-	} else if s.directories[c.RunDirectory][c.Value] == nil {
-		s.directories[c.RunDirectory][c.Value] = []*time.Time{&c.Time}
+		s.directories[c.RunDirectory] = []*models.Command{c}
 	} else {
-		s.directories[c.RunDirectory][c.Value] = append(s.directories[c.RunDirectory][c.Value], &c.Time)
+		s.directories[c.RunDirectory] = append(s.directories[c.RunDirectory], c)
 	}
 }
 
 func (s *index) GetDirectories(currentDirectory, search string) []models.Match {
 	var matches models.MatchList
 	runes := splitAndRune(utils.ReverseString(search))
-	for dir, commands := range s.directories {
-		if dir == currentDirectory {
+	for directory, commands := range s.directories {
+		if directory == currentDirectory {
 			continue
 		}
-		score := utils.ScoreWords(runes, []rune(utils.ReverseString(dir)))
+		score := utils.ScoreWords(runes, []rune(utils.ReverseString(directory)))
 		if score > 0 {
-			matches = append(matches, models.Match{
-				Score: score,
-				Value: dir,
-				Times: flattenTimes(commands),
-			})
+			matches = append(matches, models.NewDirectoryMatch(score, directory, commands))
 		}
 	}
 	sort.Sort(sort.Reverse(matches))
@@ -88,14 +70,10 @@ func (s *index) GetCommands(currentDirectory, search string) []models.Match {
 	// TODO: Prefer matches from same directory
 	var matches models.MatchList
 	runes := splitAndRune(search)
-	for cmd, times := range s.commands {
-		score := utils.ScoreWords(runes, []rune(cmd))
+	for commandValue, commands := range s.commands {
+		score := utils.ScoreWords(runes, []rune(commandValue))
 		if score > 0 {
-			matches = append(matches, models.Match{
-				Score: score,
-				Value: cmd,
-				Times: times,
-			})
+			matches = append(matches, models.NewCommandMatch(score, commandValue, commands, currentDirectory))
 		}
 	}
 	sort.Sort(sort.Reverse(matches))

@@ -49,9 +49,8 @@ func TestGetDirectories(t *testing.T) {
 
 	result := idx.GetDirectories("current-directory", "some-directory")
 	if assert.Equal(t, 1, len(result)) {
-		assert.Equal(t, float64(1), result[0].Score)
+		assert.Equal(t, float64(2), result[0].Score)
 		assert.Equal(t, "some-directory", result[0].Value)
-		assert.Equal(t, 2, len(result[0].Times))
 	}
 	result = idx.GetDirectories("current-directory", "directory")
 	if assert.Equal(t, 2, len(result)) {
@@ -67,7 +66,6 @@ func TestGetCommands(t *testing.T) {
 	if assert.Equal(t, 1, len(result)) {
 		assert.Equal(t, float64(1), result[0].Score)
 		assert.Equal(t, "bob-barker", result[0].Value)
-		assert.Equal(t, 1, len(result[0].Times))
 	}
 	result = idx.GetCommands("current-directory", "some")
 	if assert.Equal(t, 2, len(result)) {

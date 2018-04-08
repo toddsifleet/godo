@@ -1,11 +1,35 @@
 package models
 
-import "time"
-
 type Match struct {
 	Score float64
 	Value string
-	Times []*time.Time
+}
+
+func NewCommandMatch(
+	score float64,
+	value string,
+	commands []*Command,
+	CallDirectory string,
+) Match {
+
+	score *= float64(len(commands))
+	return Match{
+		Score: score,
+		Value: value,
+	}
+}
+
+func NewDirectoryMatch(
+	score float64,
+	value string,
+	commands []*Command,
+) Match {
+
+	score *= float64(len(commands))
+	return Match{
+		Score: score,
+		Value: value,
+	}
 }
 
 type MatchList []Match
