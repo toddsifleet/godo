@@ -1,5 +1,8 @@
 DIRS=bin
 
+bootstrap:
+	glide install
+
 test:
 	go test ./...
 
