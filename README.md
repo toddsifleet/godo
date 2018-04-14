@@ -3,13 +3,11 @@
 
 ## Installation
 
-  git clone git@github.com:toddsifleet/godo.git
-  cd godo
-  make bootstrap
-  make build
-  echo source `pwd`/bash.sh > ~/.bash_profile
-
-## Usage
+    git clone git@github.com:toddsifleet/godo.git
+    cd godo
+    make bootstrap
+    make build
+    echo source `pwd`/bash.sh > ~/.bash_profile
 
 ## License
 See LICENSE
