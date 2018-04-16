@@ -2,7 +2,6 @@ package models
 
 import (
 	"errors"
-	"fmt"
 	"strings"
 	"time"
 )
@@ -23,13 +22,12 @@ func CommandFromLogLine(line string) (*Command, error) {
 	if len(line) < TIMESTAMP_LENGTH+5 {
 		return nil, errors.New("invalid line")
 	}
-	fmt.Println(line)
 	t, err := time.Parse(time.UnixDate, line[0:TIMESTAMP_LENGTH])
 	if err != nil {
 		return nil, err
 	}
 
-	splits := strings.Split(line[TIMESTAMP_LENGTH:], " ")
+	splits := strings.Split(line, "__GODO_SPLIT__")
 	if len(splits) < 3 {
 		return nil, errors.New("invalid line")
 	}
