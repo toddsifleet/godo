@@ -7,7 +7,7 @@
     cd godo
     make bootstrap
     make build
-    echo source `pwd`/bash.sh > ~/.bash_profile
+    echo source `pwd`/bash.sh >> ~/.bash_profile
 
 ## License
 See LICENSE
